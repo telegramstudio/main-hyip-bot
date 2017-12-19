@@ -46,6 +46,34 @@ class MessageResponder
 
     bot.api.send_message(chat_id: message.from.id, text: "Выберите свою валюту:", reply_markup: markup)
     
+    elsif message.data == 'add_deposit_call'
+            kb = [
+             [
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin [BTC]', callback_data: 'add_btc'),
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin Cash [BCH]', callback_data: 'add_bch')
+             ],
+
+             [
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Litecoin [LTC]', callback_data: 'add_ltc'),
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin Gold [BTG]', callback_data: 'btg')
+             ],
+             [
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Dash [DASH]', callback_data: 'add_dash'),
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Ethereums [ETH]', callback_data: 'add_eth')
+             ],
+             [
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Monero [XMR]', callback_data: 'add_xmr'),
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Ripple [XRP]', callback_data: 'add_xrp')
+             ],
+             [
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Ethereum classic [ETC]', callback_data: 'add_etc'),
+             ]
+           ]
+
+      markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
+
+      bot.api.send_message(chat_id: message.from.id, text: "Выберите валюту депозита:", reply_markup: markup)
+
     elsif message.data == 'add_btc'
       @sum == @user.wallet.coins.to_i + 0.5
       @user.wallet.update(coins: @sum)
