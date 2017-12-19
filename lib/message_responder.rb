@@ -1,20 +1,24 @@
 require './models/user'
+require './models/wallet'
 require './lib/message_sender'
 
 class MessageResponder
   attr_reader :message
   attr_reader :bot
   attr_reader :user
+  attr_reader :wallet
 
   def initialize(options)
     @bot = options[:bot]
     @message = options[:message]
     @user = User.find_or_create_by(uid: message.from.id)
+    @wallet = Wallet.find_or_create_by(user_id: @user.id)
   end
 
   def callback
     if message.data == 'add_money_call'
-       bot.api.send_message(chat_id: message.from.id, text: "Пополнение счета")
+       @user.wallet.update(coins: @user.wallet.coins.to_i + 1)
+       bot.api.send_message(chat_id: message.from.id, text: "Демо режим: счет пополнен на 1 BTC, проверьте баланс")
     elsif message.data == 'draw_money_call'
       bot.api.send_message(chat_id: message.from.id, text: "Вывод средств")
     elsif message.data == 'history_money'
@@ -45,6 +49,10 @@ class MessageResponder
 
     on /^\О сервисе/ do
       coming_soon
+    end
+
+    on /^\/clear/ do
+      Wallet.destroy_all
     end
 
   end
@@ -80,7 +88,8 @@ class MessageResponder
   end
 
   def answer_wallet
-    text = "Ваш баланс: 0 BTC  ------------------------------" 
+    coins = @user.wallet.coins
+    text = "Ваш баланс: #{coins} BTC  ------------------------------" 
     
     kb = [
           [Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Пополнить', callback_data: 'add_money_call'),
