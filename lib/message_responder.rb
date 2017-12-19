@@ -20,7 +20,7 @@ class MessageResponder
       
       kb = [
              [
-             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin Bank [BTC]', callback_data: 'add_btc'),
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin [BTC]', callback_data: 'add_btc'),
              Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin Cash [BCH]', callback_data: 'add_bch')
              ],
           
@@ -123,9 +123,11 @@ class MessageResponder
     text = "Ваш баланс: #{coins} BTC                       " 
     
     kb = [
-          [Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Пополнить', callback_data: 'add_money_call'),
+          [ Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Пополнить', callback_data: 'add_money_call'),
 	    Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Вывести', callback_data: 'draw_money_call'),
-	  ],[Telegram::Bot::Types::InlineKeyboardButton.new(text: 'История транзакций', callback_data: 'history_money')]]
+	  ],
+          [
+          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'История транзакций', callback_data: 'history_money')]]
      
     markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
     
