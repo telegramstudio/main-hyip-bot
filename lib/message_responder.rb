@@ -17,8 +17,39 @@ class MessageResponder
 
   def callback
     if message.data == 'add_money_call'
-       @user.wallet.update(coins: @user.wallet.coins.to_i + 1)
-       bot.api.send_message(chat_id: message.from.id, text: "Демо режим: счет пополнен на 1 BTC, проверьте баланс")
+      
+      kb = [
+             [
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin Bank [BTC]', callback_data: 'add_btc'),
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin Cash [BCH]', callback_data: 'add_bch')
+             ],
+          
+             [
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Litecoin [LTC]', callback_data: 'add_ltc'),
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin Gold [BTG]', callback_data: 'btg')
+             ],
+             [
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Dash [DASH]', callback_data: 'add_dash'),
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Ethereums [ETH]', callback_data: 'add_eth')
+             ],
+             [
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Monero [XMR]', callback_data: 'add_xmr'),
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Ripple [XRP]', callback_data: 'add_xrp')
+             ],
+             [
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Ethereum classic [ETC]', callback_data: 'add_etc'),
+             ]
+           ]
+
+    
+    markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
+
+    bot.api.send_message(chat_id: message.from.id, text: "Выберите свою валюту:", reply_markup: markup)
+    
+    elsif message.data == 'add_btc'
+      @sum == @user.wallet.coins.to_i + 0.5
+      @user.wallet.update(coins: @sum)
+      bot.api.send_message(chat_id: message.from.id, text: "Счет пополнен на 0.5 BTC")
     elsif message.data == 'draw_money_call'
       bot.api.send_message(chat_id: message.from.id, text: "Вывод средств")
     elsif message.data == 'history_money'
@@ -89,7 +120,7 @@ class MessageResponder
 
   def answer_wallet
     coins = @user.wallet.coins
-    text = "Ваш баланс: #{coins} BTC  ------------------------------" 
+    text = "Ваш баланс: #{coins} BTC                       " 
     
     kb = [
           [Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Пополнить', callback_data: 'add_money_call'),
@@ -102,7 +133,7 @@ class MessageResponder
   end
 
   def answer_deposit
-   text = "Ваши депозиты: 0 BTC ----------------------------"
+   text = "Ваши депозиты: 0 BTC                            "
    kb = [
          [Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Внести',  callback_data: 'add_deposit_call'),
           Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Текущие', callback_data: 'my_deposits_call')
