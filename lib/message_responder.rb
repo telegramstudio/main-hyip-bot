@@ -1,5 +1,6 @@
 require './models/user'
 require './models/wallet'
+require './models/deposit'
 require './lib/message_sender'
 require './lib/keyboard'
 
@@ -8,6 +9,7 @@ class MessageResponder
   attr_reader :bot
   attr_reader :user
   attr_reader :wallet
+  attr_reader :deposit
 
   def initialize(options)
     @bot = options[:bot]
@@ -18,15 +20,19 @@ class MessageResponder
 
   def callback
     # Пополнить  ########################################################################################
+    
     if message.data == 'add_money_call'
       kb = KeyBrd.new.add_money_keyboard
       markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
       bot.api.send_message(chat_id: message.from.id, text: "Выберите свою валюту:", reply_markup: markup)
+    
     # Внести депозит ####################################################################################
+    
     elsif message.data == 'add_deposit_call'
       kb = KeyBrd.new.add_deposit_keyboard
       markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
       bot.api.send_message(chat_id: message.from.id, text: "Выберите валюту депозита:", reply_markup: markup)
+    
     elsif message.data == 'depo_btc'
         bot.api.send_message(chat_id: message.from.id, text: "На какую сумму открыть депозит? Сумма спишется с вашего кошелька.")   
     
@@ -49,6 +55,8 @@ class MessageResponder
       else
         @sum = @wallet.coins.to_f - arg.to_f
         @wallet.update(coins: @sum)
+        @d = Deposit.create(user_id: @user.id, coin: 'btc', coins: arg.to_f, percent: 3)
+        p @d 
       end
     end
 
@@ -76,8 +84,12 @@ class MessageResponder
       coming_soon
     end
 
-    on /^\/clear/ do
+    on /^\/d_wallet/ do
       Wallet.destroy_all
+    end
+
+    on /^\/d_deposit/ do
+      Deposit.destroy_all
     end
 
   end
@@ -130,7 +142,17 @@ class MessageResponder
   end
 
   def answer_deposit
-   text = "Ваши депозиты: 0 BTC"
+   if @user.deposits.count < 0
+     text = "Ваши депозиты: 0.00000000 BTC"
+   else
+     out = []
+     @user.deposits.each do |deposit|
+       out << "#{deposit} - #{deposit.coins.to_f} BTC"
+     end
+     p out 
+     text = "Ваши депозиты: 
+     "
+   end
    kb = [
          [Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Внести',  callback_data: 'add_deposit_call'),
           Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Текущие', callback_data: 'my_deposits_call')
@@ -149,7 +171,6 @@ class MessageResponder
   
 
 end
-
 
 
 
