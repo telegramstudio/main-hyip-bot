@@ -3,6 +3,7 @@ require './models/wallet'
 require './models/deposit'
 require './lib/message_sender'
 require './lib/keyboard'
+require './lib/deposit_constructor'
 
 class MessageResponder
   attr_reader :message
@@ -34,12 +35,12 @@ class MessageResponder
       bot.api.send_message(chat_id: message.from.id, text: "Выберите валюту депозита:", reply_markup: markup)
     
     elsif message.data == 'depo_btc'
-        bot.api.send_message(chat_id: message.from.id, text: "На какую сумму открыть депозит? Сумма спишется с вашего кошелька.")   
+        bot.api.send_message(chat_id: message.from.id, text: "Тестовый режим. Пишем '/btc cумма' На какую сумму открыть депозит? Сумма спишется с вашего кошелька.")   
     
     elsif message.data == 'add_btc'
-      @sum = @wallet.coins.to_i + 1
+      @sum = @wallet.coins.to_i + 10
       @wallet.update(coins: @sum)
-      bot.api.send_message(chat_id: message.from.id, text: "Счет пополнен на 1 BTC")
+      bot.api.send_message(chat_id: message.from.id, text: "Счет пополнен на 10 BTC")
     elsif message.data == 'draw_money_call'
       bot.api.send_message(chat_id: message.from.id, text: "Вывод средств")
     elsif message.data == 'history_money'
@@ -55,8 +56,9 @@ class MessageResponder
       else
         @sum = @wallet.coins.to_f - arg.to_f
         @wallet.update(coins: @sum)
-        @d = Deposit.create(user_id: @user.id, coin: 'btc', coins: arg.to_f, percent: 3)
-        p @d 
+        @percent = DepositConstructor.new(coins: arg.to_f).calculate
+        @d = Deposit.create(user_id: @user.id, coin: 'btc', coins: arg.to_f, percent: @percent)
+        bot.api.send_message(chat_id: message.chat.id, text: "Открыт депозит на сумму #{arg.to_f} под #{@percent}%") 
       end
     end
 

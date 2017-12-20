@@ -21,8 +21,7 @@ class DepositConstructor
 end
 
 
-DepositConstructor.new(coins: 0.029).calculate
-
+# DepositConstructor.new(coins: 0.029).calculate
 
 
 
