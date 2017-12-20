@@ -27,8 +27,10 @@ class MessageResponder
       kb = KeyBrd.new.add_deposit_keyboard
       markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
       bot.api.send_message(chat_id: message.from.id, text: "Выберите валюту депозита:", reply_markup: markup)
+    elsif message.data == 'depo_btc'bot.api.send_message(chat_id: message.from.id, text: "На какую сумму открыть депозит? Сумма спишется с вашего кошелька.")   
+    
     elsif message.data == 'add_btc'
-      @sum = @wallet.coins.to_i + 10
+      @sum = @wallet.coins.to_i + 1
       @wallet.update(coins: @sum)
       bot.api.send_message(chat_id: message.from.id, text: "Счет пополнен на 1 BTC")
     elsif message.data == 'draw_money_call'
@@ -39,6 +41,16 @@ class MessageResponder
   end
 
   def respond
+    
+    on /^\/btc (.+)/ do |arg|
+      if @user.wallet.coins.to_f < arg.to_f
+         bot.api.send_message(chat_id: message.from.id, text: "Недостаточно средств на кошельке.")
+      else
+        @sum = @wallet.coins.to_f - arg.to_f
+        @wallet.update(coins: @sum)
+      end
+    end
+
     on /^\/start/ do
       answer_with_greeting_message
     end
@@ -102,9 +114,11 @@ class MessageResponder
   def answer_wallet
     coins = @user.wallet.coins
     if coins == 0
-      text = "Ваш баланс:  0 BTC"
+      text = "Ваш баланс:  0.00000000 BTC"
     else
-      text = "Ваш баланс: #{coins.to_i} BTC"
+      rub  = coins.to_f * 982561.01
+      dol  = coins.to_f * 3539
+      text = "Ваш баланс: #{coins.to_f} BTC = $#{dol} = #{rub} руб."
     end
       
     kb = KeyBrd.new.wallet_keyboard 
