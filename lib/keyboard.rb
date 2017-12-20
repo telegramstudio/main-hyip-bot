@@ -1,7 +1,7 @@
 class KeyBrd
      def about_keyboard
          [
-          [Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Конвертер',  url: 'http://ru.investing.com/currency-converter')],
+          [Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Конвертер',  url: 'http://ru.investing.com/currencies/ltc-rub-converter')],
           [Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Помощь', callback_data: 'help')]
          ]
       end
