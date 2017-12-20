@@ -27,7 +27,8 @@ class MessageResponder
       kb = KeyBrd.new.add_deposit_keyboard
       markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
       bot.api.send_message(chat_id: message.from.id, text: "Выберите валюту депозита:", reply_markup: markup)
-    elsif message.data == 'depo_btc'bot.api.send_message(chat_id: message.from.id, text: "На какую сумму открыть депозит? Сумма спишется с вашего кошелька.")   
+    elsif message.data == 'depo_btc'
+        bot.api.send_message(chat_id: message.from.id, text: "На какую сумму открыть депозит? Сумма спишется с вашего кошелька.")   
     
     elsif message.data == 'add_btc'
       @sum = @wallet.coins.to_i + 1
