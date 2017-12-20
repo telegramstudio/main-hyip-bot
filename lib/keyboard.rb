@@ -1,9 +1,23 @@
 class KeyBrd
+     def about_keyboard
+         [
+          [Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Конвертер',  url: 'http://ru.investing.com/currency-converter')],
+          [Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Помощь', callback_data: 'help')]
+         ]
+      end
+ 
+      def deposit_keyboard
+         [
+          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Открыть депозит',  callback_data: 'add_deposit_call'),
+          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'История депозитов', callback_data: 'history_deposits')
+         ]
+      end
+
       def add_money_keyboard  
           [
              [
-             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin [BTC]', callback_data: 'add_btc'),
-             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin Cash [BCH]', callback_data: 'add_bch')
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin BTC', callback_data: 'add_btc'),
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin Cash BCH', callback_data: 'add_bch')
              ],
 
              [

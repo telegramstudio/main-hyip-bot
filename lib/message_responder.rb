@@ -3,7 +3,10 @@ require './models/wallet'
 require './models/deposit'
 require './lib/message_sender'
 require './lib/keyboard'
+require './lib/text'
 require './lib/deposit_constructor'
+
+
 
 class MessageResponder
   attr_reader :message
@@ -45,6 +48,9 @@ class MessageResponder
       bot.api.send_message(chat_id: message.from.id, text: "Вывод средств")
     elsif message.data == 'history_money'
       bot.api.send_message(chat_id: message.from.id, text: "История транзакций")
+    elsif message.data == 'help'
+      text = TextFormatter.new.help_text
+      bot.api.send_message(chat_id: message.from.id, text: text)  
     end
   end
 
@@ -70,7 +76,7 @@ class MessageResponder
       answer_with_farewell_message
     end
 
-    on /^\Кошелек/ do
+    on /^\u{1F4B0}Кошелек/ do
       answer_wallet
     end
 
@@ -79,11 +85,11 @@ class MessageResponder
     end
 
     on /^\Партнеры/ do
-      coming_soon
+      answer_partners
     end
 
     on /^\О сервисе/ do
-      coming_soon
+      answer_about
     end
 
     on /^\/d_wallet/ do
@@ -115,14 +121,16 @@ class MessageResponder
 
   def answer_with_greeting_message
     answer_with_message I18n.t('greeting_message')
- end
+  end
 
   def answer_with_farewell_message
     answer_with_message I18n.t('farewell_message')
   end
 
   def answer_with_message(text)
-    answers = ["Кошелек", "Депозиты", "Партнеры", "О сервисе"]
+   # answers = ["\xF0\x9F\x92\xB0 Кошелек ", "\xF0\x9F\x92\xBC Депозиты", "\xF0\x9F\x91\xA5 Партнеры", "\xF0\x9F\x94\xAC О сервисе"]
+        answers = ["Кошелек", "Депозиты", "Партнеры", "О сервисе"]
+
     MessageSender.new(bot: bot, chat: message.chat, text: text, answers: answers).send
   end
 
@@ -144,30 +152,39 @@ class MessageResponder
   end
 
   def answer_deposit
-   if @user.deposits.count < 0
-     text = "Ваши депозиты: 0.00000000 BTC"
-   else
-     out = []
-     @user.deposits.each do |deposit|
-       out << "*#{deposit.coins.to_f} BTC"
-     end
+    if @user.deposits.count < 0
+      text = "Ваши депозиты: 0.00000000 BTC"
+    else
+      out = ""
+        @user.deposits.each do |deposit|
+          out += "*#{deposit.coins.to_f} BTC"
+        end
+    end
      p out 
      text = "Ваши депозиты: 
      #{out}
      "
-   end
-   kb = [
-         [Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Внести',  callback_data: 'add_deposit_call'),
-          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Текущие', callback_data: 'my_deposits_call')
-         ],
-         [Telegram::Bot::Types::InlineKeyboardButton.new(text: 'История депозитов', callback_data: 'history_deposits')]]
-
-   markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true) 
-   bot.api.send_message(chat_id: message.chat.id, text: text, reply_markup: markup)
+      
+    kb = KeyBrd.new.deposit_keyboard
+    markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true) 
+    bot.api.send_message(chat_id: message.chat.id, text: text, reply_markup: markup)
   end
 
-  def coming_soon
-    bot.api.send_message(chat_id: message.chat.id, text: "Недоступно в демо режиме")
+  def answer_about
+    text = TextFormatter.new.text
+   
+    
+    kb = KeyBrd.new.about_keyboard
+
+    markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
+
+    bot.api.send_message(chat_id: message.chat.id, text: text, reply_markup: markup)
+
+  end
+
+  def answer_partners
+    text = TextFormatter.new.partners_text
+    bot.api.send_message(chat_id: message.chat.id, text: text)
   end
 
   
