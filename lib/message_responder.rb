@@ -76,7 +76,7 @@ class MessageResponder
       answer_with_farewell_message
     end
 
-    on /^\u{1F4B0}Кошелек/ do
+    on /^\Кошелек/ do
       answer_wallet
     end
 
