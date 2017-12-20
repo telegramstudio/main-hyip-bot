@@ -47,9 +47,15 @@ class KeyBrd
              Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Ethereum classic [ETC]', callback_data: 'depo_etc'),
              ]
            ]
+       end
 
-
-      end
-
-
+       def wallet_keyboard
+        [
+          [ Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Пополнить', callback_data: 'add_money_call'),
+            Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Вывести', callback_data: 'draw_money_call'),
+          ],
+          [
+          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'История транзакций', callback_data: 'history_money')]]
+        end
+  
 end

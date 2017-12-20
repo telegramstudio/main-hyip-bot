@@ -17,21 +17,20 @@ class MessageResponder
   end
 
   def callback
+    # Пополнить  ########################################################################################
     if message.data == 'add_money_call'
-    kb = KeyBrd.new.add_money_keyboard
-    markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
-
-    bot.api.send_message(chat_id: message.from.id, text: "Выберите свою валюту:", reply_markup: markup)
-    
+      kb = KeyBrd.new.add_money_keyboard
+      markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
+      bot.api.send_message(chat_id: message.from.id, text: "Выберите свою валюту:", reply_markup: markup)
+    # Внести депозит ####################################################################################
     elsif message.data == 'add_deposit_call'
       kb = KeyBrd.new.add_deposit_keyboard
-       
       markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
-
       bot.api.send_message(chat_id: message.from.id, text: "Выберите валюту депозита:", reply_markup: markup)
-
     elsif message.data == 'add_btc'
-      bot.api.send_message(chat_id: message.from.id, text: "Счет пополнен на 0.5 BTC")
+      @sum = @wallet.coins.to_i + 10
+      @wallet.update(coins: @sum)
+      bot.api.send_message(chat_id: message.from.id, text: "Счет пополнен на 1 BTC")
     elsif message.data == 'draw_money_call'
       bot.api.send_message(chat_id: message.from.id, text: "Вывод средств")
     elsif message.data == 'history_money'
@@ -102,15 +101,14 @@ class MessageResponder
 
   def answer_wallet
     coins = @user.wallet.coins
-    text = "*Ваш баланс:*  #{coins.to_i} BTC" 
-    
-    kb = [
-          [ Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Пополнить', callback_data: 'add_money_call'),
-	    Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Вывести', callback_data: 'draw_money_call'),
-	  ],
-          [
-          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'История транзакций', callback_data: 'history_money')]]
-     
+    if coins == 0
+      text = "Ваш баланс:  0 BTC"
+    else
+      text = "Ваш баланс: #{coins.to_i} BTC"
+    end
+      
+    kb = KeyBrd.new.wallet_keyboard 
+  
     markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
     
     bot.api.send_message(chat_id: message.chat.id, text: text, reply_markup: markup)
@@ -131,6 +129,8 @@ class MessageResponder
   def coming_soon
     bot.api.send_message(chat_id: message.chat.id, text: "Недоступно в демо режиме")
   end
+
+  
   
 
 end
