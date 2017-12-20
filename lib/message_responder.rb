@@ -147,10 +147,11 @@ class MessageResponder
    else
      out = []
      @user.deposits.each do |deposit|
-       out << "#{deposit} - #{deposit.coins.to_f} BTC"
+       out << "*#{deposit.coins.to_f} BTC"
      end
      p out 
      text = "Ваши депозиты: 
+     #{out}
      "
    end
    kb = [
