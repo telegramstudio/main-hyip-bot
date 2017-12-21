@@ -100,6 +100,7 @@ class MessageResponder
       Deposit.destroy_all
     end
 
+
   end
 
   private
@@ -128,8 +129,8 @@ class MessageResponder
   end
 
   def answer_with_message(text)
-   # answers = ["\xF0\x9F\x92\xB0 Кошелек ", "\xF0\x9F\x92\xBC Депозиты", "\xF0\x9F\x91\xA5 Партнеры", "\xF0\x9F\x94\xAC О сервисе"]
-        answers = ["Кошелек", "Депозиты", "Партнеры", "О сервисе"]
+        answers = ["\xF0\x9F\x92\xB0 Кошелек ", "\xF0\x9F\x92\xBC Депозиты", "\xF0\x9F\x91\xA5 Партнеры", "\xF0\x9F\x94\xAC О сервисе"]
+        #answers = ["Кошелек", "Депозиты", "Партнеры", "О сервисе"]
 
     MessageSender.new(bot: bot, chat: message.chat, text: text, answers: answers).send
   end
