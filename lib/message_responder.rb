@@ -5,7 +5,7 @@ require './lib/message_sender'
 require './lib/keyboard'
 require './lib/text'
 require './lib/deposit_constructor'
-
+require './lib/address_constructor'
 
 
 class MessageResponder
@@ -38,12 +38,38 @@ class MessageResponder
       bot.api.send_message(chat_id: message.from.id, text: "Выберите валюту депозита:", reply_markup: markup)
     
     elsif message.data == 'depo_btc'
-        bot.api.send_message(chat_id: message.from.id, text: "Тестовый режим. Пишем '/btc cумма' На какую сумму открыть депозит? Сумма спишется с вашего кошелька.")   
+        bot.api.send_message(chat_id: message.from.id, text: "Укажите сумму депозита. Сумма спишется с вашего кошелька.")  
     
     elsif message.data == 'add_btc'
-      @sum = @wallet.coins.to_i + 10
-      @wallet.update(coins: @sum)
-      bot.api.send_message(chat_id: message.from.id, text: "Счет пополнен на 10 BTC")
+      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.btc}")
+      bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
+    elsif message.data == 'add_bch'
+      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.bch}")
+      bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
+    elsif message.data == 'add_btg'
+      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.btg}")
+      bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
+    elsif message.data == 'add_ltc'
+      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.ltc}")
+      bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
+    elsif message.data == 'add_dash'
+      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.dash}")
+      bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
+    elsif message.data == 'add_eth'
+      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.eth}")
+      bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
+    elsif message.data == 'add_xmr'
+      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.xmr}")
+      bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
+    elsif message.data == 'add_xrp'
+      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.xrp}")
+      bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
+    elsif message.data == 'add_etc'
+      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.etc}")
+      bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
+
+
+
     elsif message.data == 'draw_money_call'
       bot.api.send_message(chat_id: message.from.id, text: "Вывод средств")
     elsif message.data == 'history_money'
@@ -129,8 +155,8 @@ class MessageResponder
   end
 
   def answer_with_message(text)
-        answers = ["\xF0\x9F\x92\xB0 Кошелек ", "\xF0\x9F\x92\xBC Депозиты", "\xF0\x9F\x91\xA5 Партнеры", "\xF0\x9F\x94\xAC О сервисе"]
-        #answers = ["Кошелек", "Депозиты", "Партнеры", "О сервисе"]
+        #answers = ["\xF0\x9F\x92\xB0 Кошелек ", "\xF0\x9F\x92\xBC Депозиты", "\xF0\x9F\x91\xA5 Партнеры", "\xF0\x9F\x94\xAC О сервисе"]
+        answers = ["Кошелек", "Депозиты", "Партнеры", "О сервисе"]
 
     MessageSender.new(bot: bot, chat: message.chat, text: text, answers: answers).send
   end
@@ -142,7 +168,18 @@ class MessageResponder
     else
       rub  = coins.to_f * 982561.01
       dol  = coins.to_f * 3539
-      text = "Ваш баланс: #{coins.to_f} BTC = $#{dol} = #{rub} руб."
+      text = "
+Ваш баланс: 
+#{coins.to_f} BTC = $#{dol} = #{rub} руб.
+#{coins.to_f} BCH = $#{dol} = #{rub} руб.
+#{coins.to_f} BTG = $#{dol} = #{rub} руб.
+#{coins.to_f} LTC = $#{dol} = #{rub} руб.
+#{coins.to_f} ETH = $#{dol} = #{rub} руб.
+#{coins.to_f} DASH = $#{dol} = #{rub} руб.
+#{coins.to_f} XMR = $#{dol} = #{rub} руб.
+#{coins.to_f} XRP = $#{dol} = #{rub} руб.
+#{coins.to_f} ETC = $#{dol} = #{rub} руб.
+      "
     end
       
     kb = KeyBrd.new.wallet_keyboard 
