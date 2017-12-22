@@ -107,7 +107,7 @@ class MessageResponder
       answer_with_farewell_message
     end
 
-    on /^\Кошелек/ do
+    on /^\Кошелек (.+)/ do
       answer_wallet
     end
 
@@ -161,7 +161,7 @@ class MessageResponder
   end
 
   def answer_with_message(text)
-        answers = ["\xF0\x9F\x92\xB0 Кошелек ", "\xF0\x9F\x92\xBC Депозиты", "\xF0\x9F\x91\xA5 Партнеры", "\xF0\x9F\x94\xAC О сервисе"]
+        answers = ["Кошелек \xF0\x9F\x92\xB0", "Депозиты \xF0\x9F\x92\xBC", "Партнеры \xF0\x9F\x91\xA5", "О сервисе \xF0\x9F\x91\xA5"]
         #answers = ["Кошелек", "Депозиты", "Партнеры", "О сервисе"]
 
     MessageSender.new(bot: bot, chat: message.chat, text: text, answers: answers).send
