@@ -93,6 +93,11 @@ class MessageResponder
         bot.api.send_message(chat_id: message.chat.id, text: "Открыт депозит на сумму #{arg.to_f} под #{@percent}%") 
       end
     end
+    
+    on /^\/start (.+)/ do |arg|
+      @user.update(ref: arg)
+      answer_with_greeting_message
+    end
 
     on /^\/start/ do
       answer_with_greeting_message
@@ -125,6 +130,7 @@ class MessageResponder
     on /^\/d_deposit/ do
       Deposit.destroy_all
     end
+   
 
 
   end
@@ -155,8 +161,8 @@ class MessageResponder
   end
 
   def answer_with_message(text)
-        #answers = ["\xF0\x9F\x92\xB0 Кошелек ", "\xF0\x9F\x92\xBC Депозиты", "\xF0\x9F\x91\xA5 Партнеры", "\xF0\x9F\x94\xAC О сервисе"]
-        answers = ["Кошелек", "Депозиты", "Партнеры", "О сервисе"]
+        answers = ["\xF0\x9F\x92\xB0 Кошелек ", "\xF0\x9F\x92\xBC Депозиты", "\xF0\x9F\x91\xA5 Партнеры", "\xF0\x9F\x94\xAC О сервисе"]
+        #answers = ["Кошелек", "Депозиты", "Партнеры", "О сервисе"]
 
     MessageSender.new(bot: bot, chat: message.chat, text: text, answers: answers).send
   end
@@ -221,11 +227,9 @@ class MessageResponder
   end
 
   def answer_partners
-    text = TextFormatter.new.partners_text
+    text = TextFormatter.new.partners_text("#{@user.uid}", "#{@user.ref}")
     bot.api.send_message(chat_id: message.chat.id, text: text)
-  end
-
-  
+  end  
   
 
 end

@@ -50,7 +50,7 @@ https://ru.m.wikipedia.org/wiki/Ripple
 
 end
 
-def partners_text
+def partners_text(user, ref)
 
 "Партнерская программа:
 
@@ -66,7 +66,10 @@ def partners_text
 Заработано с 1-ой линии в сумме: 0.00 USD
 Заработано со 2-ой и последующих линий в сумме: 0.00 USD
 
-Ваш пригласитель:"
+Ваш пригласитель: #{ref}
+
+Ваша реферальная ссылка: https://telegram.me/demo_hyip_bot?start=#{user}
+"
 
 end
 
