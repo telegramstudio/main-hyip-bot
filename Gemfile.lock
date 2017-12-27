@@ -19,6 +19,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
+    coinbase (4.1.0)
     concurrent-ruby (1.0.5)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
@@ -51,6 +52,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  coinbase
   i18n
   pg
   rake

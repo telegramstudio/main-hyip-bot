@@ -1,31 +1,25 @@
+require 'coinbase/wallet'
 
 class AddressConstructor
-  
+   
+  attr_reader :client
 
-  def btc
-    [
-"39xk8ai74f5U3T61X8gN8CFdAyFN4CHFJ1",
-"3C7DjBSv5tTKiQiwEEDYTpgNeBsgYLhHj3",
-"3KN8JW7N3fYNHd3D6vJLjN1p5yCfXHpSNb",
-"33g5vBkxHyRjYHr4SS7WoLFZqRCW2MNckf",
-"3QJQG9aHNCCvqzJJfHjA5SD6zaBfc1NvXT",
-"33E6iKhe7Bi5P3ty4xLwEPPY2xVh4U2Qu4",
-"3MDHMBamnYX9kCrAy9Kh3yGMWkMqWTGqk7",
-"3JA2QVVnEx7WaH3pLaacRqjPSfs1LMKYwf",
-"3L6Be2A54pNjf8TnL6BW3smVYcpa1ygGcZ",
-"3JTajUHGtg3wEDvU8gf7eiZL6hxMNqVTw6",
-"3Q4S6yLGfy4GkhWjaXA7pVjkMvABE6aqfX",
-"34ZeFvGJERemG2k8uocGXCqTAQQezGd2yz",
-"3HHuoB1QNRyVBcfhArHvd3qXWprQK7HpVZ",
-"3DHmYmNWCGeCaE7hEsFAjEk9zZQvCPpcTN",
-"36QsKdebvnvTysjemtHRPr9CMxgt7Vu5Y6",
-"3G5UKaTYTmzX5qsCQxHYE6jUkL5FCyQQup",
-"33TBVZcv7C4aDfQWQ3y1nHnxw1k1St5A8d",
-"3By3ytDyXNus2B5rcqo6fhFXfDG86HE7UH",
-"3PeMkLXJAawUaqxRpw1KQAvPNn19GAYtBw",
-"3ANirmkd4XF4uGfg1AiaGiBfMBdVYJoosM"
-].sample
-  end 
+  def initialize
+    @client = Coinbase::Wallet::Client.new(api_key: "9cIzFKBuopI7SOo7", api_secret: "k0FRfiXKV6DjFt7ZboReQVZYo4x9ZvM9")
+  end
+
+  def generate_btc
+    ac = @client.primary_account
+    p ac.create_address.address
+  end
+
+  def generate_bch
+  end
+
+  def generate_ltc
+  end
+
+
 
 def bch
 ["14rFBZ9nTQ3ghEbkzQxJsmqu9rEeRnRfq7",

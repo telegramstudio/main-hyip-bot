@@ -41,7 +41,7 @@ class MessageResponder
         bot.api.send_message(chat_id: message.from.id, text: "Укажите сумму депозита. Сумма спишется с вашего кошелька.")  
     
     elsif message.data == 'add_btc'
-      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.btc}")
+      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.generate_btc}")
       bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
     elsif message.data == 'add_bch'
       bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.bch}")
@@ -229,8 +229,9 @@ class MessageResponder
   def answer_partners
     text = TextFormatter.new.partners_text("#{@user.uid}", "#{@user.ref}")
     bot.api.send_message(chat_id: message.chat.id, text: text)
-  end  
-  
+  end
+ 
+   
 
 end
 
