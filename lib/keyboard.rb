@@ -1,4 +1,21 @@
 class KeyBrd
+
+
+     def help_keyboard
+         [
+          [
+            Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin [BTC]',  url: 'https://bitcoin.org/ru/'),
+            Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin Cash [BCH]',  url: 'https://www.bitcoincash.org/')
+          ],
+          [
+            Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Litecoin [LTC]',  url: 'https://litecoin.org/'),
+            Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Dash [DASH]',  url: 'https://www.dash.org/')
+          ],
+          [Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Ethereum [ETH]',  url: 'https://www.ethereum.org/')]
+         ]
+      end
+
+
      def about_keyboard
          [
           [Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Конвертер',  url: 'http://ru.investing.com/currencies/ltc-rub-converter')],
@@ -7,33 +24,26 @@ class KeyBrd
       end
  
       def deposit_keyboard
+         [[
+          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Открыть депозит',  callback_data: 'add_deposit_call')
+         ],
          [
-          Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Открыть депозит',  callback_data: 'add_deposit_call'),
           Telegram::Bot::Types::InlineKeyboardButton.new(text: 'История депозитов', callback_data: 'history_deposits')
-         ]
+         ]]
       end
 
       def add_money_keyboard  
           [
              [
-             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin BTC', callback_data: 'add_btc'),
-             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin Cash BCH', callback_data: 'add_bch')
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin [BTC]', callback_data: 'add_btc'),
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin Cash [BCH]', callback_data: 'add_bch')
              ],
-
              [
              Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Litecoin [LTC]', callback_data: 'add_ltc'),
-             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin Gold [BTG]', callback_data: 'add_btg')
-             ],
-             [
-             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Dash [DASH]', callback_data: 'add_dash'),
              Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Ethereums [ETH]', callback_data: 'add_eth')
              ],
              [
-             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Monero [XMR]', callback_data: 'add_xmr'),
-             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Ripple [XRP]', callback_data: 'add_xrp')
-             ],
-             [
-             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Ethereum classic [ETC]', callback_data: 'add_etc'),
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Dash [DASH]', callback_data: 'add_dash')
              ]
            ]
       end
@@ -47,18 +57,10 @@ class KeyBrd
 
              [
              Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Litecoin [LTC]', callback_data: 'depo_ltc'),
-             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin Gold [BTG]', callback_data: 'depo_btg')
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Dash [DASH]', callback_data: 'depo_dash')
              ],
              [
-             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Dash [DASH]', callback_data: 'depo_dash'),
              Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Ethereums [ETH]', callback_data: 'depo_eth')
-             ],
-             [
-             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Monero [XMR]', callback_data: 'depo_xmr'),
-             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Ripple [XRP]', callback_data: 'depo_xrp')
-             ],
-             [
-             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Ethereum classic [ETC]', callback_data: 'depo_etc'),
              ]
            ]
        end

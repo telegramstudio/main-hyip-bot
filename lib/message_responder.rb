@@ -44,30 +44,17 @@ class MessageResponder
       bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.generate_btc}")
       bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
     elsif message.data == 'add_bch'
-      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.bch}")
-      bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
-    elsif message.data == 'add_btg'
-      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.btg}")
+      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.generate_bch}")
       bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
     elsif message.data == 'add_ltc'
-      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.ltc}")
+      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.generate_ltc}")
       bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
     elsif message.data == 'add_dash'
-      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.dash}")
+      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.generate_dash}")
       bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
     elsif message.data == 'add_eth'
-      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.eth}")
+      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.generate_eth}")
       bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
-    elsif message.data == 'add_xmr'
-      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.xmr}")
-      bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
-    elsif message.data == 'add_xrp'
-      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.xrp}")
-      bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
-    elsif message.data == 'add_etc'
-      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.etc}")
-      bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
-
 
 
     elsif message.data == 'draw_money_call'
@@ -76,7 +63,13 @@ class MessageResponder
       bot.api.send_message(chat_id: message.from.id, text: "История транзакций")
     elsif message.data == 'help'
       text = TextFormatter.new.help_text
-      bot.api.send_message(chat_id: message.from.id, text: text)  
+
+      kb = KeyBrd.new.help_keyboard
+
+      markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
+
+      bot.api.send_message(chat_id: message.from.id, text: text, reply_markup: markup)
+
     end
   end
 
@@ -178,13 +171,9 @@ class MessageResponder
 Ваш баланс: 
 #{coins.to_f} BTC = $#{dol} = #{rub} руб.
 #{coins.to_f} BCH = $#{dol} = #{rub} руб.
-#{coins.to_f} BTG = $#{dol} = #{rub} руб.
 #{coins.to_f} LTC = $#{dol} = #{rub} руб.
 #{coins.to_f} ETH = $#{dol} = #{rub} руб.
 #{coins.to_f} DASH = $#{dol} = #{rub} руб.
-#{coins.to_f} XMR = $#{dol} = #{rub} руб.
-#{coins.to_f} XRP = $#{dol} = #{rub} руб.
-#{coins.to_f} ETC = $#{dol} = #{rub} руб.
       "
     end
       

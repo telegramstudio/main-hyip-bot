@@ -33,6 +33,7 @@ GEM
     minitest (5.10.3)
     multipart-post (2.0.0)
     pg (0.21.0)
+    pg (0.21.0-x86-mingw32)
     rake (12.3.0)
     telegram-bot-ruby (0.8.6.1)
       faraday
@@ -49,6 +50,7 @@ GEM
 
 PLATFORMS
   ruby
+  x86-mingw32
 
 DEPENDENCIES
   activerecord
