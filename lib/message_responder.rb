@@ -41,21 +41,38 @@ class MessageResponder
         bot.api.send_message(chat_id: message.from.id, text: "Укажите сумму депозита. Сумма спишется с вашего кошелька.")  
     
     elsif message.data == 'add_btc'
+      kb = [Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Сгенерировать адрес', callback_data: 'gen_btc')] 
+      markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
+      bot.api.send_message(chat_id: message.from.id, text: "Что-то пишем", reply_markup: markup)
+    elsif message.data == 'gen_btc'
       bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.generate_btc}")
-      bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
+
     elsif message.data == 'add_bch'
+      kb = [Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Сгенерировать адрес', callback_data: 'gen_bch')]        
+      markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
+      bot.api.send_message(chat_id: message.from.id, text: "Что-то пишем", reply_markup: markup)
+    elsif message.data == 'gen_bch'
       bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.generate_bch}")
-      bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
+
     elsif message.data == 'add_ltc'
+      kb = [Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Сгенерировать адрес', callback_data: 'gen_ltc')]        
+      markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
+      bot.api.send_message(chat_id: message.from.id, text: "Что-то пишем", reply_markup: markup)
+    elsif message.data == 'gen_ltc'
       bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.generate_ltc}")
-      bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
+
+
+    elsif message.data == 'add_eth'
+      kb = [Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Сгенерировать адрес', callback_data: 'gen_eth')]        
+      markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
+      bot.api.send_message(chat_id: message.from.id, text: "Что-то пишем", reply_markup: markup)
+    elsif message.data == 'gen_eth'
+      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.generate_eth}")
+
+
     elsif message.data == 'add_dash'
       bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.generate_dash}")
       bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
-    elsif message.data == 'add_eth'
-      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.generate_eth}")
-      bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
-
 
     elsif message.data == 'draw_money_call'
       bot.api.send_message(chat_id: message.from.id, text: "Вывод средств")
