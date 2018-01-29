@@ -1,5 +1,8 @@
 require 'coinbase/wallet'
 
+require 'http'
+require 'json'
+
 class AddressConstructor
    
   attr_reader :client
@@ -28,9 +31,7 @@ class AddressConstructor
     p @bch_wallet.create_address.address
   end 
 
-  def generate_dash
-    "Делаю"
-  end
+
   
 
 end

@@ -6,6 +6,7 @@ require './lib/keyboard'
 require './lib/text'
 require './lib/deposit_constructor'
 require './lib/address_constructor'
+require './lib/dash_generator'
 
 
 class MessageResponder
@@ -69,10 +70,14 @@ class MessageResponder
     elsif message.data == 'gen_eth'
       bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.generate_eth}")
 
-
     elsif message.data == 'add_dash'
-      bot.api.send_message(chat_id: message.from.id, text: "#{AddressConstructor.new.generate_dash}")
-      bot.api.send_message(chat_id: message.from.id, text: "Отправьте средства на указаный адрес и проверьте баланс")
+      kb = [Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Сгенерировать адрес', callback_data: 'gen_dash')]
+      markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
+      bot.api.send_message(chat_id: message.from.id, text: "Что-то пишем", reply_markup: markup)
+
+
+    elsif message.data == 'gen_dash'
+      bot.api.send_message(chat_id: message.from.id, text: "#{DashGenerator.new.generate}")
 
     elsif message.data == 'draw_money_call'
       bot.api.send_message(chat_id: message.from.id, text: "Вывод средств")

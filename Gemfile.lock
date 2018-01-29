@@ -12,6 +12,8 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    addressable (2.5.2)
+      public_suffix (>= 2.0.2, < 4.0)
     arel (8.0.0)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
@@ -23,9 +25,20 @@ GEM
     concurrent-ruby (1.0.5)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
+    domain_name (0.5.20170404)
+      unf (>= 0.0.5, < 1.0.0)
     equalizer (0.0.11)
     faraday (0.13.1)
       multipart-post (>= 1.2, < 3)
+    http (3.0.0)
+      addressable (~> 2.3)
+      http-cookie (~> 1.0)
+      http-form_data (>= 2.0.0.pre.pre2, < 3)
+      http_parser.rb (~> 0.6.0)
+    http-cookie (1.0.3)
+      domain_name (~> 0.5)
+    http-form_data (2.0.0)
+    http_parser.rb (0.6.0)
     i18n (0.9.1)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
@@ -34,6 +47,7 @@ GEM
     multipart-post (2.0.0)
     pg (0.21.0)
     pg (0.21.0-x86-mingw32)
+    public_suffix (3.0.1)
     rake (12.3.0)
     telegram-bot-ruby (0.8.6.1)
       faraday
@@ -42,6 +56,10 @@ GEM
     thread_safe (0.3.6)
     tzinfo (1.2.4)
       thread_safe (~> 0.1)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.4)
+    unf_ext (0.0.7.4-x86-mingw32)
     virtus (1.0.5)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
@@ -55,6 +73,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   coinbase
+  http
   i18n
   pg
   rake
