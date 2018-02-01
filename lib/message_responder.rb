@@ -45,6 +45,7 @@ class MessageResponder
         ] 
         markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
         bot.api.send_message(chat_id: message.from.id, text: "Откройте депозит или узнайте подробности", reply_markup: markup)  
+
     
     elsif message.data == 'depo_bch'
         kb = [
@@ -78,7 +79,54 @@ class MessageResponder
         ] 
         markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
         bot.api.send_message(chat_id: message.from.id, text: "Откройте депозит или узнайте подробности", reply_markup: markup)  
+   
     
+    elsif message.data == 'about_depo'
+      kb = KeyBrd.new.about_depo_keyboard
+      markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
+      bot.api.send_message(chat_id: message.from.id, text: "В какой валюте интересует депозит?", reply_markup: markup)
+
+    elsif message.data == 'about_btc'
+      text = TextFormatter.new.depo_btc_text
+      kb = [
+        Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Открыть депозит в BTC', callback_data: 'open_depo_btc')
+      ] 
+      markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
+      bot.api.send_message(chat_id: message.from.id, text: text, reply_markup: markup)
+
+    elsif message.data == 'about_bch'
+      text = TextFormatter.new.depo_bch_text
+      kb = [
+        Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Открыть депозит в BCH', callback_data: 'open_depo_bch')
+      ] 
+      markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
+      bot.api.send_message(chat_id: message.from.id, text: text, reply_markup: markup)
+
+    elsif message.data == 'about_ltc'
+      text = TextFormatter.new.depo_ltc_text
+      kb = [
+        Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Открыть депозит в LTC', callback_data: 'open_depo_ltc')
+      ] 
+      markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
+      bot.api.send_message(chat_id: message.from.id, text: text, reply_markup: markup)
+
+    elsif message.data == 'about_eth'
+      text = TextFormatter.new.depo_eth_text
+      kb = [
+        Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Открыть депозит в ETH', callback_data: 'open_depo_eth')
+      ] 
+      markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
+      bot.api.send_message(chat_id: message.from.id, text: text, reply_markup: markup)
+
+    elsif message.data == 'about_dash'
+      text = TextFormatter.new.depo_dash_text
+      kb = [
+        Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Открыть депозит в DASH', callback_data: 'open_depo_dash')
+      ] 
+      markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
+      bot.api.send_message(chat_id: message.from.id, text: text, reply_markup: markup)
+
+
 
 
     elsif message.data == 'add_btc'

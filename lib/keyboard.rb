@@ -48,6 +48,23 @@ class KeyBrd
            ]
       end
 
+      def about_depo_keyboard  
+          [
+             [
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin [BTC]', callback_data: 'about_btc'),
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Bitcoin Cash [BCH]', callback_data: 'about_bch')
+             ],
+             [
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Litecoin [LTC]', callback_data: 'about_ltc'),
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Ethereums [ETH]', callback_data: 'about_eth')
+             ],
+             [
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Dash [DASH]', callback_data: 'about_dash')
+             ]
+           ]
+      end
+
+
       def add_deposit_keyboard
            [
              [
