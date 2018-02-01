@@ -40,7 +40,7 @@ class KeyBrd
              ],
              [
              Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Litecoin [LTC]', callback_data: 'add_ltc'),
-             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Ethereums [ETH]', callback_data: 'add_eth')
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Ethereum [ETH]', callback_data: 'add_eth')
              ],
              [
              Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Dash [DASH]', callback_data: 'add_dash')
@@ -56,7 +56,7 @@ class KeyBrd
              ],
              [
              Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Litecoin [LTC]', callback_data: 'about_ltc'),
-             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Ethereums [ETH]', callback_data: 'about_eth')
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Ethereum [ETH]', callback_data: 'about_eth')
              ],
              [
              Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Dash [DASH]', callback_data: 'about_dash')
@@ -77,7 +77,7 @@ class KeyBrd
              Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Dash [DASH]', callback_data: 'depo_dash')
              ],
              [
-             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Ethereums [ETH]', callback_data: 'depo_eth')
+             Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Ethereum [ETH]', callback_data: 'depo_eth')
              ]
            ]
        end
